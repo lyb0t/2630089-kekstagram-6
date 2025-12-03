@@ -1,30 +1,24 @@
-function checkLength(s, l) {
-  return s.length <= l;
+function getMinutesFromTime(str) {
+  const splitted = str.split(':');
+  return +splitted[0] * 60 + +splitted[1];
 }
+function isMeetingOvertime(
+  startWorkTime,
+  endWorkTime,
+  startMeetingTime,
+  meetingDuration
+) {
+  const startWorkMinutes = getMinutesFromTime(startWorkTime);
+  const endWorkMinutes = getMinutesFromTime(endWorkTime);
+  const startMeetingMinutes = getMinutesFromTime(startMeetingTime);
 
-function isPalindrome(s) {
-  const newS = s.replaceAll(' ', '');
-  const center = Math.floor(newS.length / 2);
-  for (let i = 0; i <= center; i++) {
-    if (newS[i] !== newS[newS.length - i - 1]) {
-      return false;
-    }
-  }
-  return true;
+  return (
+    startWorkMinutes <= startMeetingMinutes &&
+    startMeetingMinutes + meetingDuration < endWorkMinutes
+  );
 }
-
-function getNumbers(s) {
-  const newS = String(s);
-  let result = '';
-  const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  for (const letter of newS) {
-    if (letter in numbers) {
-      result += letter;
-    }
-  }
-  return result;
-}
-
-checkLength('123', 5);
-isPalindrome('1 2 3 2 1');
-getNumbers(-123.4);
+isMeetingOvertime('08:00', '17:30', '14:00', 90); // true
+isMeetingOvertime('8:0', '10:0', '8:0', 120);     // true
+isMeetingOvertime('08:00', '14:30', '14:00', 90); // false
+isMeetingOvertime('14:00', '17:30', '08:0', 90);  // false
+isMeetingOvertime('8:00', '17:30', '08:00', 900); // false
