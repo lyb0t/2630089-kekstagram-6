@@ -56,3 +56,5 @@ export function generate25Posts() {
   }
   return posts;
 }
+
+export const data = generate25Posts();
