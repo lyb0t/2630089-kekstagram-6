@@ -100,7 +100,7 @@ form.addEventListener('submit', async (e) => {
     submitBtn.setAttribute('disabled', 'true');
     const result = await sendData(new FormData(form));
     if (result) {
-      clear();
+      close();
     }
     submitBtn.removeAttribute('disabled');
   }
@@ -109,7 +109,15 @@ form.addEventListener('submit', async (e) => {
 cancelBtn.addEventListener('click', close);
 
 imgInput.addEventListener('change', () => {
-  if (imgInput.files[0]) {
+  if (
+    imgInput.files[0] &&
+    (imgInput.files[0].type === 'image/jpeg' ||
+      imgInput.files[0].type === 'image/jpg' ||
+      imgInput.files[0].type === 'image/png')
+  ) {
+    imgPreview
+      .querySelector('img')
+      .setAttribute('src', URL.createObjectURL(imgInput.files[0]));
     open();
   } else {
     close();
