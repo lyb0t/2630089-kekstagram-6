@@ -27,7 +27,14 @@ export function createMiniature(data) {
   return miniature;
 }
 
+export function clearMiniatures() {
+  picturesBlock
+    .querySelectorAll('.picture')
+    .forEach((element) => element.remove());
+}
+
 export function drawMiniatures(dataArr) {
+  clearMiniatures();
   const fragment = document.createDocumentFragment();
   for (const data of dataArr) {
     const miniature = createMiniature(data);
